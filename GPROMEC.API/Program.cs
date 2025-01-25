@@ -45,6 +45,9 @@ builder.Services.AddScoped<IDetalleIpercRepository, DetalleIpercRepository>();
 builder.Services.AddScoped<ITrabajadoresService, TrabajadoresService>();
 builder.Services.AddScoped<ITrabajadoresRepository, TrabajadoresRepository>();
 
+builder.Services.AddScoped<IFirmasMatrizIperService, FirmasMatrizIperService>();
+builder.Services.AddScoped<IFirmasMatrizIperRepository, FirmasMatrizIperRepository>();
+
 // Agrega todos los servicios e interfaces que uses.
 
 

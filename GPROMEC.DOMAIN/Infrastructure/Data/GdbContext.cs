@@ -53,6 +53,10 @@ public partial class GdbContext : DbContext
             entity.ToTable("Archivos_Generados");
 
             entity.Property(e => e.IdArchivo).HasColumnName("id_archivo");
+            entity.Property(e => e.Carpeta)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("carpeta");
             entity.Property(e => e.Estado).HasColumnName("estado");
             entity.Property(e => e.FechaGeneracion)
                 .IsSparse()
@@ -70,14 +74,7 @@ public partial class GdbContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("tabla_relacion");
-            entity.Property(e => e.TipoArchivo)
-                .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("tipo_archivo");
-            entity.Property(e => e.UrlArchivo)
-                .HasMaxLength(255)
-                .IsUnicode(false)
-                .HasColumnName("url_archivo");
+            entity.Property(e => e.UrlArchivo).HasColumnName("url_archivo");
 
             entity.HasOne(d => d.IdRelacionNavigation).WithMany(p => p.ArchivosGenerados)
                 .HasForeignKey(d => d.IdRelacion)
@@ -162,18 +159,9 @@ public partial class GdbContext : DbContext
             entity.Property(e => e.FechaRevisado)
                 .HasColumnType("datetime")
                 .HasColumnName("fecha_revisado");
-            entity.Property(e => e.FirmaAprobadoUrl)
-                .HasMaxLength(255)
-                .IsUnicode(false)
-                .HasColumnName("firma_aprobado_url");
-            entity.Property(e => e.FirmaElaboradoUrl)
-                .HasMaxLength(255)
-                .IsUnicode(false)
-                .HasColumnName("firma_elaborado_url");
-            entity.Property(e => e.FirmaRevisadoUrl)
-                .HasMaxLength(255)
-                .IsUnicode(false)
-                .HasColumnName("firma_revisado_url");
+            entity.Property(e => e.FirmaAprobadoUrl).HasColumnName("firma_aprobado_url");
+            entity.Property(e => e.FirmaElaboradoUrl).HasColumnName("firma_elaborado_url");
+            entity.Property(e => e.FirmaRevisadoUrl).HasColumnName("firma_revisado_url");
             entity.Property(e => e.IdDetalle).HasColumnName("id_detalle");
             entity.Property(e => e.RevisadoPor).HasColumnName("revisado_por");
 

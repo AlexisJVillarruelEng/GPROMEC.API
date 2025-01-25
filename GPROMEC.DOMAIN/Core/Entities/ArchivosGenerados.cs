@@ -11,11 +11,11 @@ public partial class ArchivosGenerados
 
     public string? TablaRelacion { get; set; }
 
-    public string? TipoArchivo { get; set; }
+    public string? Carpeta { get; set; }
 
     public string? NombreArchivo { get; set; }
 
-    public string? UrlArchivo { get; set; }
+    public byte[]? UrlArchivo { get; set; }
 
     public DateTime? FechaGeneracion { get; set; }
 

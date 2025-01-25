@@ -10,8 +10,6 @@ using GPROMEC.DOMAIN.Core.Interfaces;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Storage.V1;
-using System.Resources;
-using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 
 namespace GPROMEC.DOMAIN.Core.Services
 {
@@ -80,7 +78,7 @@ namespace GPROMEC.DOMAIN.Core.Services
 
             // Llama al repositorio para agregar el proyecto.
             var proyectoID = await _repository.AddAsync(proyecto);
-            await CrearCarpetasEnFirebase(proyectoDto.NombreProyecto);
+            //await CrearCarpetasEnFirebase(proyectoDto.NombreProyecto);
             return proyectoID;
 
         }
@@ -171,7 +169,7 @@ namespace GPROMEC.DOMAIN.Core.Services
                 }
 
                 var storage = StorageClient.Create();
-                var bucketName = "gs://gpproject-2c0a9.firebasestorage.app";
+                var bucketName = "gpproject-2c0a9.appspot.com";
 
                 var objetos = storage.ListObjects(bucketName);
                 foreach (var obj in objetos)

@@ -21,11 +21,11 @@ public partial class FirmasMatrizIper
 
     public DateTime? FechaAprobado { get; set; }
 
-    public string? FirmaElaboradoUrl { get; set; }
+    public byte[]? FirmaElaboradoUrl { get; set; }
 
-    public string? FirmaRevisadoUrl { get; set; }
+    public byte[]? FirmaRevisadoUrl { get; set; }
 
-    public string? FirmaAprobadoUrl { get; set; }
+    public byte[]? FirmaAprobadoUrl { get; set; }
 
     public virtual Trabajadores? AprobadoPorNavigation { get; set; }
 
