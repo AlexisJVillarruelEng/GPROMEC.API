@@ -67,12 +67,16 @@ namespace GPROMEC.DOMAIN.Core.Services
             return await _repository.AddAsync(trabajador);
         }
 
-        public async Task<string> IniciarSesionAsync(InicioSesionDTO inicioSesionDto)
+        public async Task<LoginResponseDTO> IniciarSesionAsync(InicioSesionDTO inicioSesionDto)
         {
             var trabajador = await _repository.GetByCorreoAsync(inicioSesionDto.Correo);
             if (trabajador != null && trabajador.Contraseña == inicioSesionDto.Contraseña)
             {
-                return trabajador.Nombre; // Retorna el nombre si las credenciales son correctas.
+                return new LoginResponseDTO
+                {
+                     Nombre = trabajador.Nombre,
+                     Rol = trabajador.IdRolNavigation.NombreRol // Asume que IdRolNavigation contiene el rol
+                }; // Retorna el nombre si las credenciales son correctas.
             }
 
             return null; // Credenciales inválidas.

@@ -37,7 +37,9 @@ namespace GPROMEC.DOMAIN.Infrastructure.Repositories
 
         public async Task<Trabajadores> GetByCorreoAsync(string correo)
         {
-            return await _context.Trabajadores.FirstOrDefaultAsync(t => t.Correo == correo && t.Estado);
+            return await _context.Trabajadores
+                   .Include(t => t.IdRolNavigation) // Incluye la información del rol
+                   .FirstOrDefaultAsync(t => t.Correo == correo && t.Estado);
         }
 
         public async Task<int> AddAsync(Trabajadores trabajador)

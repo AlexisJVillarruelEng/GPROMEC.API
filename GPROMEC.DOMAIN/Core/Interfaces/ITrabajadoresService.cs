@@ -12,7 +12,7 @@ namespace GPROMEC.DOMAIN.Core.Interfaces
         Task<IEnumerable<TrabajadorDTO>> GetAllAsync(bool incluirInactivos = false);
         Task<TrabajadorDTO> GetByIdAsync(int id);
         Task<int> AddAsync(CrearTrabajadorDTO trabajadorDto);
-        Task<string> IniciarSesionAsync(InicioSesionDTO inicioSesionDto);
+        Task<LoginResponseDTO> IniciarSesionAsync(InicioSesionDTO inicioSesionDto);
         Task UpdateAsync(CrearTrabajadorDTO trabajadorDto, int id);
         Task DeleteLogicallyAsync(int id);
         Task DeletePermanentlyAsync(int id);

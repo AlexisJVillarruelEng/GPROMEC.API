@@ -70,7 +70,12 @@ namespace GPROMEC.API.Controllers
         {
             var nombre = await _service.IniciarSesionAsync(inicioSesionDto);
             if (nombre == null) return Unauthorized(); // Retorna 401 si las credenciales no son válidas.
-            return Ok(new { Nombre = nombre }); // Retorna 200 con el nombre del trabajador.
+                                                       // Retorna nombre y rol en la respuesta
+            return Ok(new
+            {
+                Nombre = nombre.Nombre,
+                Rol = nombre.Rol
+            }); // Retorna 200 con el nombre del trabajador.
         }
 
         /// <summary>
