@@ -1,8 +1,12 @@
+using GPROMEC.API.Controllers;
 using GPROMEC.DOMAIN.Core.Interfaces;
 using GPROMEC.DOMAIN.Core.Services;
 using GPROMEC.DOMAIN.Infrastructure.Data;
 using GPROMEC.DOMAIN.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +52,9 @@ builder.Services.AddScoped<ITrabajadoresRepository, TrabajadoresRepository>();
 builder.Services.AddScoped<IFirmasMatrizIperService, FirmasMatrizIperService>();
 builder.Services.AddScoped<IFirmasMatrizIperRepository, FirmasMatrizIperRepository>();
 
+builder.Services.AddScoped<IArchivosGeneradosRepository, ArchivosGeneradosRepository>();
+builder.Services.AddScoped<IArchivosGeneradosService, ArchivosGeneradosService>();
+
 // Agrega todos los servicios e interfaces que uses.
 
 
@@ -62,6 +69,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }

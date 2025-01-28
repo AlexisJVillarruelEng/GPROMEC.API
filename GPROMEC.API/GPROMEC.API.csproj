@@ -7,17 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FirebaseAdmin" Version="3.1.0" />
-    <PackageReference Include="Google.Cloud.Storage.V1" Version="4.10.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="EPPlus" Version="7.5.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.1" />
+    <PackageReference Include="Microsoft.SqlServer.Types" Version="160.1000.6" />
+    <PackageReference Include="ReportViewerCore.NETCore" Version="15.1.25" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters.Abstractions" Version="8.0.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="7.2.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="7.2.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.2.0" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.1" />
   </ItemGroup>
 
   <ItemGroup>
