@@ -1,4 +1,4 @@
-using GPROMEC.API.Controllers;
+﻿using GPROMEC.API.Controllers;
 using GPROMEC.DOMAIN.Core.Interfaces;
 using GPROMEC.DOMAIN.Core.Services;
 using GPROMEC.DOMAIN.Infrastructure.Data;
@@ -55,11 +55,24 @@ builder.Services.AddScoped<IFirmasMatrizIperRepository, FirmasMatrizIperReposito
 builder.Services.AddScoped<IArchivosGeneradosRepository, ArchivosGeneradosRepository>();
 builder.Services.AddScoped<IArchivosGeneradosService, ArchivosGeneradosService>();
 
+//builder.Services.AddSharedInfrastructure(_config);
+builder.Services.AddControllers();
+
 // Agrega todos los servicios e interfaces que uses.
 
+//CORS
+//CORS
+builder.Services.AddCors(options => {
 
+    options.AddDefaultPolicy(builder =>
+    {
+        builder//.WithOrigins("http:www.miempresa.com")
+               .AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
 
-builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -69,15 +82,12 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
+app.UseCors();
 app.MapControllers();
 
 app.Run();
