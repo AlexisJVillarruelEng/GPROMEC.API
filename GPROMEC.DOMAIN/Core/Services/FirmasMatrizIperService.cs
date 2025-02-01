@@ -24,7 +24,7 @@ namespace GPROMEC.DOMAIN.Core.Services
             return firmas.Select(f => new FirmasDTO
             {
                 IdFirma = f.IdFirma,
-                IdDetalle = f.IdDetalle,
+                IdPartida = f.IdPartida,
                 NombreElaboradoPor = f.ElaboradoPorNavigation?.Nombre,
                 NombreRevisadoPor = f.RevisadoPorNavigation?.Nombre,
                 NombreAprobadoPor = f.AprobadoPorNavigation?.Nombre,
@@ -45,7 +45,7 @@ namespace GPROMEC.DOMAIN.Core.Services
             return new FirmasDTO
             {
                 IdFirma = firma.IdFirma,
-                IdDetalle = firma.IdDetalle,
+                IdPartida = firma.IdPartida,
                 NombreElaboradoPor = firma.ElaboradoPorNavigation?.Nombre,
                 NombreRevisadoPor = firma.RevisadoPorNavigation?.Nombre,
                 NombreAprobadoPor = firma.AprobadoPorNavigation?.Nombre,
@@ -62,7 +62,7 @@ namespace GPROMEC.DOMAIN.Core.Services
         {
             var firma = new FirmasMatrizIper
             {
-                IdDetalle = firmaDto.IdDetalle,
+                IdPartida = firmaDto.IdPartida,
                 ElaboradoPor = firmaDto.ElaboradoPor,
                 RevisadoPor = firmaDto.RevisadoPor,
                 AprobadoPor = firmaDto.AprobadoPor,
@@ -107,5 +107,11 @@ namespace GPROMEC.DOMAIN.Core.Services
             await _repository.DeleteAsync(id);
             return true;
         }
+
+        public async Task<IEnumerable<FirmasDTO>> ObtenerFirmasPorMatriz(int id_partida)
+        {
+            return await _repository.ObtenerFirmasPorMatriz(id_partida);
+        }
+
     }
 }

@@ -11,6 +11,8 @@ public partial class Partidas
 
     public string? NombrePartida { get; set; }
 
+    public virtual ICollection<FirmasMatrizIper> FirmasMatrizIper { get; set; } = new List<FirmasMatrizIper>();
+
     public virtual Obras IdObraNavigation { get; set; } = null!;
 
     public virtual ICollection<Procesos> Procesos { get; set; } = new List<Procesos>();

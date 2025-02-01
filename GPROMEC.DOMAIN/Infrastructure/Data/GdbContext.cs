@@ -162,7 +162,7 @@ public partial class GdbContext : DbContext
             entity.Property(e => e.FirmaAprobadoUrl).HasColumnName("firma_aprobado_url");
             entity.Property(e => e.FirmaElaboradoUrl).HasColumnName("firma_elaborado_url");
             entity.Property(e => e.FirmaRevisadoUrl).HasColumnName("firma_revisado_url");
-            entity.Property(e => e.IdDetalle).HasColumnName("id_detalle");
+            entity.Property(e => e.IdPartida).HasColumnName("id_partida");
             entity.Property(e => e.RevisadoPor).HasColumnName("revisado_por");
 
             entity.HasOne(d => d.AprobadoPorNavigation).WithMany(p => p.FirmasMatrizIperAprobadoPorNavigation)
@@ -174,10 +174,10 @@ public partial class GdbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Firmas_matriz_iper_Trabajadores");
 
-            entity.HasOne(d => d.IdDetalleNavigation).WithMany(p => p.FirmasMatrizIper)
-                .HasForeignKey(d => d.IdDetalle)
+            entity.HasOne(d => d.IdPartidaNavigation).WithMany(p => p.FirmasMatrizIper)
+                .HasForeignKey(d => d.IdPartida)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Firmas_matriz_iper_DetalleIPERC");
+                .HasConstraintName("FK_Firmas_matriz_iper_Partidas");
 
             entity.HasOne(d => d.RevisadoPorNavigation).WithMany(p => p.FirmasMatrizIperRevisadoPorNavigation)
                 .HasForeignKey(d => d.RevisadoPor)

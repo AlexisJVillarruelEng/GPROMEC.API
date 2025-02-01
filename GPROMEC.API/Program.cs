@@ -55,6 +55,9 @@ builder.Services.AddScoped<IFirmasMatrizIperRepository, FirmasMatrizIperReposito
 builder.Services.AddScoped<IArchivosGeneradosRepository, ArchivosGeneradosRepository>();
 builder.Services.AddScoped<IArchivosGeneradosService, ArchivosGeneradosService>();
 
+builder.Services.AddScoped<IMatrizIpercRepository, MatrizIpercRepository > ();
+builder.Services.AddScoped<IMatrizIpercService, MatrizIpercService > ();
+
 //builder.Services.AddSharedInfrastructure(_config);
 builder.Services.AddControllers();
 

@@ -7,7 +7,7 @@ public partial class FirmasMatrizIper
 {
     public int IdFirma { get; set; }
 
-    public int IdDetalle { get; set; }
+    public int IdPartida { get; set; }
 
     public int ElaboradoPor { get; set; }
 
@@ -31,7 +31,7 @@ public partial class FirmasMatrizIper
 
     public virtual Trabajadores ElaboradoPorNavigation { get; set; } = null!;
 
-    public virtual DetalleIperc IdDetalleNavigation { get; set; } = null!;
+    public virtual Partidas IdPartidaNavigation { get; set; } = null!;
 
     public virtual Trabajadores? RevisadoPorNavigation { get; set; }
 }

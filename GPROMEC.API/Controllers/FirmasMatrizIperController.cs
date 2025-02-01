@@ -72,5 +72,26 @@ namespace GPROMEC.API.Controllers
             if (!success) return NotFound();
             return Ok(new { message = "Firma eliminada correctamente", FechaEliminacion = DateTime.UtcNow });
         }
+
+        [HttpGet("Matriz/{id_partida}")]
+        public async Task<IActionResult> ObtenerFirmasPorMatriz(int id_partida)
+        {
+            try
+            {
+                var firmas = await _service.ObtenerFirmasPorMatriz(id_partida);
+
+                if (firmas == null || !firmas.Any())
+                {
+                    return NotFound(new { mensaje = "No se encontraron firmas para esta matriz." });
+                }
+
+                return Ok(firmas);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = "Error en el servidor.", error = ex.Message });
+            }
+        }
+
     }
 }

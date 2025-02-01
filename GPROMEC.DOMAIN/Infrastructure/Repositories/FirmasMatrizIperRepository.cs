@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GPROMEC.DOMAIN.Core.DTO;
 using GPROMEC.DOMAIN.Core.Entities;
 using GPROMEC.DOMAIN.Core.Interfaces;
 using GPROMEC.DOMAIN.Infrastructure.Data;
@@ -58,6 +59,28 @@ namespace GPROMEC.DOMAIN.Infrastructure.Repositories
                 _context.FirmasMatrizIper.Remove(firma);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<IEnumerable<FirmasDTO>> ObtenerFirmasPorMatriz(int id_partida)
+        {
+            var firmas = await _context.FirmasMatrizIper
+                .Where(f => f.IdPartida == id_partida)
+                .Select(f => new FirmasDTO
+                {
+                    IdFirma = f.IdFirma,
+                    NombreElaboradoPor = f.ElaboradoPorNavigation.Nombre,
+                    NombreRevisadoPor = f.RevisadoPorNavigation.Nombre,
+                    NombreAprobadoPor = f.AprobadoPorNavigation.Nombre,
+                    FechaElaborado = f.FechaElaborado,
+                    FechaRevisado = f.FechaRevisado,
+                    FechaAprobado = f.FechaAprobado,
+                    FirmaElaboradoUrl = f.FirmaElaboradoUrl ,
+                    FirmaRevisadoUrl = f.FirmaRevisadoUrl,
+                    FirmaAprobadoUrl = f.FirmaAprobadoUrl 
+                })
+                .ToListAsync();
+
+            return firmas;
         }
     }
 }

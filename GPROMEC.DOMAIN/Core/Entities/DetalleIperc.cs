@@ -35,7 +35,5 @@ public partial class DetalleIperc
 
     public string? GradoRiesgo { get; set; }
 
-    public virtual ICollection<FirmasMatrizIper> FirmasMatrizIper { get; set; } = new List<FirmasMatrizIper>();
-
     public virtual Tareas IdTareaNavigation { get; set; } = null!;
 }

@@ -14,5 +14,6 @@ namespace GPROMEC.DOMAIN.Core.Interfaces
         Task<FirmasDTO> CreateAsync(CrearFirmaDTO firmaDto);
         Task<FirmasDTO> UpdateAsync(int id, ActualizarFirmaDTO firmaDto);
         Task<bool> DeleteAsync(int id);
+        Task<IEnumerable<FirmasDTO>> ObtenerFirmasPorMatriz(int id_partida);
     }
 }
