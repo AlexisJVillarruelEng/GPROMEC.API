@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GPROMEC.DOMAIN.Core.DTO;
 using GPROMEC.DOMAIN.Core.Entities;
 using GPROMEC.DOMAIN.Core.Interfaces;
 using GPROMEC.DOMAIN.Infrastructure.Data;
@@ -32,6 +33,7 @@ namespace GPROMEC.DOMAIN.Infrastructure.Repositories
         {
             return await _context.Trabajadores
                 .Include(t => t.IdRolNavigation)
+                .Include(t => t.IdUbigeoNavigation)
                 .FirstOrDefaultAsync(t => t.IdTrabajador == id);
         }
 
@@ -49,10 +51,33 @@ namespace GPROMEC.DOMAIN.Infrastructure.Repositories
             return trabajador.IdTrabajador; // Retorna el ID generado.
         }
 
-        public async Task UpdateAsync(Trabajadores trabajador)
+        public async Task<bool> UpdateAsync(int id, ActualizarTrabajadorDTO trabajadorDTO)
         {
+            var trabajador = await _context.Trabajadores.FindAsync(id);
+
+            if (trabajador == null)
+            {
+                return false;
+            }
+
+            trabajador.Nombre = trabajadorDTO.Nombre;
+            trabajador.Apellido = trabajadorDTO.Apellido;
+            trabajador.Dni = trabajadorDTO.DNI;
+            trabajador.Correo = trabajadorDTO.Correo;
+            trabajador.Contraseña = trabajadorDTO.Contraseña;
+            trabajador.IdUbigeo = trabajadorDTO.IdUbigeo;
+            trabajador.IdRol = trabajadorDTO.IdRol;
+            trabajador.FechaCreacion = DateOnly.FromDateTime(DateTime.UtcNow);
+
+            if (trabajadorDTO.Estado.HasValue)
+            {
+                trabajador.Estado = trabajadorDTO.Estado.Value;
+            }
+
             _context.Trabajadores.Update(trabajador);
             await _context.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task DeleteLogicallyAsync(int id)

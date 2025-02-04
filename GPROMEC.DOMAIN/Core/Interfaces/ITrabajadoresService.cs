@@ -13,7 +13,7 @@ namespace GPROMEC.DOMAIN.Core.Interfaces
         Task<TrabajadorDTO> GetByIdAsync(int id);
         Task<int> AddAsync(CrearTrabajadorDTO trabajadorDto);
         Task<LoginResponseDTO> IniciarSesionAsync(InicioSesionDTO inicioSesionDto);
-        Task UpdateAsync(CrearTrabajadorDTO trabajadorDto, int id);
+        Task<bool> UpdateAsync(int id,ActualizarTrabajadorDTO trabajadorDTO);
         Task DeleteLogicallyAsync(int id);
         Task DeletePermanentlyAsync(int id);
     }

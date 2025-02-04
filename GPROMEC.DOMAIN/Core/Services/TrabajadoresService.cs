@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GPROMEC.DOMAIN.Core.DTO;
 using GPROMEC.DOMAIN.Core.Entities;
 using GPROMEC.DOMAIN.Core.Interfaces;
+using GPROMEC.DOMAIN.Infrastructure.Repositories;
 
 namespace GPROMEC.DOMAIN.Core.Services
 {
@@ -27,9 +28,14 @@ namespace GPROMEC.DOMAIN.Core.Services
                 Nombre = t.Nombre,
                 Apellido = t.Apellido,
                 Correo = t.Correo,
+                Contraseña= t.Contraseña,
+                FechaCreacion= t.FechaCreacion,
+                Dni= t.Dni,
                 Departamento = t.IdUbigeoNavigation.Departamento,
                 Rol = t.IdRolNavigation.NombreRol,
-                Estado = t.Estado
+                Estado = t.Estado,
+                IdUbigeo = t.IdUbigeo,
+                IdRol = t.IdRol
             });
         }
 
@@ -44,8 +50,13 @@ namespace GPROMEC.DOMAIN.Core.Services
                 Nombre = trabajador.Nombre,
                 Apellido = trabajador.Apellido,
                 Correo = trabajador.Correo,
-                Rol = trabajador.IdRolNavigation.NombreRol,
-                Estado = trabajador.Estado
+                Contraseña = trabajador.Contraseña,
+                Dni = trabajador.Dni,
+                Departamento = trabajador.IdUbigeoNavigation.Departamento?? "no info",
+                Rol = trabajador.IdRolNavigation?.NombreRol,
+                Estado = trabajador.Estado,
+                IdUbigeo = trabajador.IdUbigeo,
+                IdRol = trabajador.IdRol
             };
         }
 
@@ -82,24 +93,10 @@ namespace GPROMEC.DOMAIN.Core.Services
             return null; // Credenciales inválidas.
         }
 
-        public async Task UpdateAsync(CrearTrabajadorDTO trabajadorDto, int id)
+        public async Task<bool> UpdateAsync(int id, ActualizarTrabajadorDTO trabajadorDTO)
         {
-            var trabajador = new Trabajadores
-            {
-                IdTrabajador = id,
-                Nombre = trabajadorDto.Nombre,
-                Apellido = trabajadorDto.Apellido,
-                Dni = trabajadorDto.Dni,
-                Correo = trabajadorDto.Correo,
-                Contraseña = trabajadorDto.Contraseña,
-                IdUbigeo = trabajadorDto.IdUbigeo,
-                IdRol = trabajadorDto.IdRol,
-                FechaCreacion = DateOnly.FromDateTime(DateTime.UtcNow),
-                Estado = true
-            };
-
-            await _repository.UpdateAsync(trabajador);
-        }
+            return await _repository.UpdateAsync(id, trabajadorDTO);
+        }   
 
         public async Task DeleteLogicallyAsync(int id)
         {

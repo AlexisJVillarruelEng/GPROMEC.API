@@ -1,5 +1,6 @@
 ﻿using GPROMEC.DOMAIN.Core.DTO;
 using GPROMEC.DOMAIN.Core.Interfaces;
+using GPROMEC.DOMAIN.Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -85,10 +86,21 @@ namespace GPROMEC.API.Controllers
         /// <param name="trabajadorDto">Datos actualizados del trabajador.</param>
         /// <returns>No Content (204) si la operación fue exitosa.</returns>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] CrearTrabajadorDTO trabajadorDto)
+        public async Task<IActionResult> Update(int id, [FromBody] ActualizarTrabajadorDTO trabajadorDTO)
         {
-            await _service.UpdateAsync(trabajadorDto, id);
-            return NoContent(); // Retorna 204 si la operación fue exitosa.
+            if (trabajadorDTO == null)
+            {
+                return BadRequest("Datos inválidos");
+            }
+
+            var resultado = await _service.UpdateAsync(id, trabajadorDTO);
+
+            if (!resultado)
+            {
+                return NotFound($"No se encontró un trabajador con ID {id}");
+            }
+
+            return Ok(new { message = "Trabajador actualizado correctamente", id = id });
         }
 
         /// <summary>
