@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GPROMEC.DOMAIN.Core.DTO;
+using GPROMEC.DOMAIN.Core.Entities;
 
 namespace GPROMEC.DOMAIN.Core.Interfaces
 {
@@ -41,5 +42,6 @@ namespace GPROMEC.DOMAIN.Core.Interfaces
         /// </summary>
         /// <param name="id">ID de la obra a eliminar.</param>
         Task DeleteAsync(int id);
+        Task<IEnumerable<Obras>> ObtenerObrasPorProyectoAsync(int idProyecto);
     }
 }

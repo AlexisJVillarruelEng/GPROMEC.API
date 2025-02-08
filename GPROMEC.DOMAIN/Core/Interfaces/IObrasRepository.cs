@@ -15,5 +15,6 @@ namespace GPROMEC.DOMAIN.Core.Interfaces
         Task UpdateAsync(Obras obra); // Actualiza una obra existente.
         Task DeleteAsync(int id); // Elimina una obra permanentemente.
 
+        Task<IEnumerable<Obras>> ObtenerObrasPorProyectoAsync(int idProyecto);
     }
 }

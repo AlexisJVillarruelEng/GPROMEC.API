@@ -1,4 +1,5 @@
 ﻿using GPROMEC.DOMAIN.Core.DTO;
+using GPROMEC.DOMAIN.Core.Entities;
 using GPROMEC.DOMAIN.Core.Interfaces;
 using GPROMEC.DOMAIN.Core.Services;
 using Microsoft.AspNetCore.Http;
@@ -52,5 +53,21 @@ namespace GPROMEC.API.Controllers
             await _service.DeleteAsync(id);
             return NoContent();
         }
+
+        [HttpGet("PorProyecto/{idProyecto}")]
+        public async Task<ActionResult<IEnumerable<Obras>>> ObtenerObrasPorProyecto(int idProyecto)
+        {
+            var obras = await _service.ObtenerObrasPorProyectoAsync(idProyecto);
+
+            if (obras == null || !obras.Any())
+            {
+                return NotFound(new { mensaje = "No se encontraron obras para este proyecto." });
+            }
+
+            return Ok(obras);
+        }
+
+
     }
+
 }
