@@ -40,5 +40,6 @@ namespace GPROMEC.DOMAIN.Core.Interfaces
         /// </summary>
         /// <param name="id">ID de la partida a eliminar.</param>
         Task DeleteAsync(int id);
+        Task<IEnumerable<Partidas>> ObtenerPartidasPorObra(int idObra);
     }
 }

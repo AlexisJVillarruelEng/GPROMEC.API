@@ -40,5 +40,6 @@ namespace GPROMEC.DOMAIN.Core.Interfaces
         /// </summary>
         /// <param name="id">ID del proceso a eliminar.</param>
         Task DeleteAsync(int id);
+        Task<IEnumerable<Procesos>> ObtenerProcesosPorPartida(int idPartida);
     }
 }

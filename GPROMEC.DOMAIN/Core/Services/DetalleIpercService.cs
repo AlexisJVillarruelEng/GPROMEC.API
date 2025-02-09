@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GPROMEC.DOMAIN.Core.DTO;
 using GPROMEC.DOMAIN.Core.Entities;
 using GPROMEC.DOMAIN.Core.Interfaces;
+using GPROMEC.DOMAIN.Infrastructure.Repositories;
 
 namespace GPROMEC.DOMAIN.Core.Services
 {
@@ -130,6 +131,10 @@ namespace GPROMEC.DOMAIN.Core.Services
                 NivelDeRiesgo = detalle.NivielDeRiesgo ?? 0,
                 GradoDeRiesgo = detalle.GradoRiesgo
             };
+        }
+        public async Task<IEnumerable<DetalleIperc>> ObtenerDetallesPorTarea(int idTarea)
+        {
+            return await _repository.ObtenerDetallesPorTarea(idTarea);
         }
     }
 }

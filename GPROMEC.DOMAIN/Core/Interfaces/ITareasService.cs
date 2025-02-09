@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GPROMEC.DOMAIN.Core.DTO;
+using GPROMEC.DOMAIN.Core.Entities;
 
 namespace GPROMEC.DOMAIN.Core.Interfaces
 {
@@ -33,5 +34,6 @@ namespace GPROMEC.DOMAIN.Core.Interfaces
         /// Elimina una tarea de forma permanente.
         /// </summary>
         Task DeleteAsync(int id);
+        Task<IEnumerable<Tareas>> ObtenerTareasPorProceso(int idProceso);
     }
 }

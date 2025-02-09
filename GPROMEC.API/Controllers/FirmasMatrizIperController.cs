@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GPROMEC.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("gpromecAPIv1/[controller]")]
     [ApiController]
     public class FirmasController : ControllerBase
     {

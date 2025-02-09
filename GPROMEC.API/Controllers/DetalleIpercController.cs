@@ -1,5 +1,7 @@
 ﻿using GPROMEC.DOMAIN.Core.DTO;
+using GPROMEC.DOMAIN.Core.Entities;
 using GPROMEC.DOMAIN.Core.Interfaces;
+using GPROMEC.DOMAIN.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GPROMEC.API.Controllers
@@ -54,6 +56,18 @@ namespace GPROMEC.API.Controllers
             // Elimina un registro por su ID.
             await _service.DeleteAsync(id);
             return NoContent(); // Retorna 204 si se elimina correctamente.
+        }
+        [HttpGet("PorTarea/{idTarea}")]
+        public async Task<ActionResult<IEnumerable<DetalleIperc>>> GetDetallesPorTarea(int idTarea)
+        {
+            var detalles = await _service.ObtenerDetallesPorTarea(idTarea);
+
+            if (detalles == null || !detalles.Any())
+            {
+                return NotFound(new { message = "No se encontraron detalles para esta tarea." });
+            }
+
+            return Ok(detalles);
         }
     }
 }

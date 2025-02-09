@@ -72,5 +72,12 @@ namespace GPROMEC.DOMAIN.Infrastructure.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<IEnumerable<Proyectos>> ObtenerProyectosPorCliente(int idCliente)
+        {
+            return await _context.Proyectos
+                .Where(p => p.IdCliente == idCliente)
+                .ToListAsync();
+        }
     }
 }

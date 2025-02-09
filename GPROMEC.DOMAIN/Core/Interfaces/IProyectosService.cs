@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GPROMEC.DOMAIN.Core.DTO;
+using GPROMEC.DOMAIN.Core.Entities;
 
 namespace GPROMEC.DOMAIN.Core.Interfaces
 {
@@ -15,6 +16,6 @@ namespace GPROMEC.DOMAIN.Core.Interfaces
         Task UpdateAsync(CrearProyectoDTO proyectoDto, int id); // Actualizar un proyecto existente.
         Task DeleteLogicallyAsync(int id); // Eliminar lógicamente un proyecto.
         Task DeletePermanentlyAsync(int id); // Eliminar físicamente un proyecto.
-        Task ProbarConexionFirebase();
+        Task<IEnumerable<Proyectos>> ObtenerProyectosPorCliente(int idCliente);
     }
 }

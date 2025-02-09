@@ -33,5 +33,6 @@ namespace GPROMEC.DOMAIN.Core.Interfaces
         /// Elimina una tarea de forma permanente.
         /// </summary>
         Task DeleteAsync(int id);
+        Task<IEnumerable<Tareas>> ObtenerTareasPorProceso(int idProceso);
     }
 }

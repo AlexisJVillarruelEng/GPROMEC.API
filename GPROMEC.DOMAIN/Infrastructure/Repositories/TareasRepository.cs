@@ -56,5 +56,11 @@ namespace GPROMEC.DOMAIN.Infrastructure.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task<IEnumerable<Tareas>> ObtenerTareasPorProceso(int idProceso)
+        {
+            return await _context.Tareas
+                .Where(t => t.IdProceso == idProceso)
+                .ToListAsync();
+        }
     }
 }

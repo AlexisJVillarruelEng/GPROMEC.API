@@ -10,6 +10,7 @@ using GPROMEC.DOMAIN.Core.Interfaces;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Storage.V1;
+using GPROMEC.DOMAIN.Infrastructure.Repositories;
 
 namespace GPROMEC.DOMAIN.Core.Services
 {
@@ -83,46 +84,6 @@ namespace GPROMEC.DOMAIN.Core.Services
 
         }
 
-        //Firebase crear archivos
-        private async Task CrearCarpetasEnFirebase(string nombreProyecto)
-        {
-            try
-            {
-                // Inicializa Firebase si aún no está inicializado.
-                if (FirebaseApp.DefaultInstance == null)
-                {
-                    FirebaseApp.Create(new AppOptions
-                    {
-                        Credential = GoogleCredential.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "firebase-config.json")) // Ruta al archivo JSON de credenciales.
-                    });
-                }
-
-                // Configurar el cliente de Google Cloud Storage.
-                var storage = StorageClient.Create();
-                var bucketName = "gs://gpproject-2c0a9.firebasestorage.app"; // Reemplaza con tu bucket de Firebase.
-
-                // Crear archivos temporales en las "carpetas".
-                var carpetaProyecto = $"Proyectos/{nombreProyecto}/";
-                var carpetaFirmas = $"{carpetaProyecto}Firmas_{nombreProyecto}_MatricesIPERC/";
-                var carpetaMatrices = $"{carpetaProyecto}Matrices_IPERC_{nombreProyecto}/";
-
-                // Subir un archivo vacío a cada carpeta para que existan.
-                using (var stream = new MemoryStream(new byte[0]))
-                {
-                    await storage.UploadObjectAsync(bucketName, $"{carpetaFirmas}placeholder.txt", "text/plain", stream);
-                    await storage.UploadObjectAsync(bucketName, $"{carpetaMatrices}placeholder.txt", "text/plain", stream);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al crear carpetas en Firebase: " + ex.Message);
-            }
-        }
-
-
-
-
-
 
         public async Task UpdateAsync(CrearProyectoDTO proyectoDto, int id)
         {
@@ -153,38 +114,13 @@ namespace GPROMEC.DOMAIN.Core.Services
             // Llama al repositorio para eliminar físicamente.
             await _repository.DeletePermanentlyAsync(id);
         }
-    
-
-    // Método para probar la conexión a Firebase.
-        public async Task ProbarConexionFirebase()
+        public async Task<IEnumerable<Proyectos>> ObtenerProyectosPorCliente(int idCliente)
         {
-            try
-            {
-                if (FirebaseApp.DefaultInstance == null)
-                {
-                    FirebaseApp.Create(new AppOptions
-                    {
-                        Credential = GoogleCredential.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "firebase-config.json"))
-                    });
-                }
-
-                var storage = StorageClient.Create();
-                var bucketName = "gpproject-2c0a9.appspot.com";
-
-                var objetos = storage.ListObjects(bucketName);
-                foreach (var obj in objetos)
-                {
-                    Console.WriteLine($"Archivo encontrado: {obj.Name}");
-                }
-
-                Console.WriteLine("Conexión a Firebase y listado de objetos exitosa.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error al conectar con Firebase: {ex.Message}");
-                throw new Exception("Error al conectar con Firebase: " + ex.Message);
-            }
-
+            return await _repository.ObtenerProyectosPorCliente(idCliente);
         }
+
+
+        // Método para probar la conexión a Firebase.
+
     }
 }

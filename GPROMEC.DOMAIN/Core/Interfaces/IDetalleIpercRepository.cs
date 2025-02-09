@@ -14,5 +14,6 @@ namespace GPROMEC.DOMAIN.Core.Interfaces
         Task<int> AddAsync(DetalleIperc detalle); // Crear un nuevo registro.
         Task UpdateAsync(DetalleIperc detalle); // Actualizar un registro.
         Task DeleteAsync(int id); // Eliminar un registro.
+        Task<IEnumerable<DetalleIperc>> ObtenerDetallesPorTarea(int idTarea);
     }
 }

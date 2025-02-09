@@ -1,5 +1,7 @@
 ﻿using GPROMEC.DOMAIN.Core.DTO;
+using GPROMEC.DOMAIN.Core.Entities;
 using GPROMEC.DOMAIN.Core.Interfaces;
+using GPROMEC.DOMAIN.Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -50,6 +52,18 @@ namespace GPROMEC.API.Controllers
         {
             await _service.DeleteAsync(id);
             return NoContent();
+        }
+        [HttpGet("PorPartida/{idPartida}")]
+        public async Task<ActionResult<IEnumerable<Procesos>>> GetProcesosPorPartida(int idPartida)
+        {
+            var procesos = await _service.ObtenerProcesosPorPartida(idPartida);
+
+            if (procesos == null || !procesos.Any())
+            {
+                return NotFound(new { message = "No se encontraron procesos para esta partida." });
+            }
+
+            return Ok(procesos);
         }
     }
 }

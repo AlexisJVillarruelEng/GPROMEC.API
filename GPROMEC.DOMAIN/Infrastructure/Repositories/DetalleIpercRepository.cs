@@ -56,5 +56,12 @@ namespace GPROMEC.DOMAIN.Infrastructure.Repositories
                 await _context.SaveChangesAsync(); // Guarda los cambios.
             }
         }
+        public async Task<IEnumerable<DetalleIperc>> ObtenerDetallesPorTarea(int idTarea)
+        {
+            return await _context.DetalleIperc
+                .Where(d => d.IdTarea == idTarea)
+                .ToListAsync();
+        }
+
     }
 }

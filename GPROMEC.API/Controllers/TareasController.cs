@@ -1,5 +1,7 @@
 ﻿using GPROMEC.DOMAIN.Core.DTO;
+using GPROMEC.DOMAIN.Core.Entities;
 using GPROMEC.DOMAIN.Core.Interfaces;
+using GPROMEC.DOMAIN.Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -50,6 +52,18 @@ namespace GPROMEC.API.Controllers
         {
             await _service.DeleteAsync(id);
             return NoContent();
+        }
+        [HttpGet("PorProceso/{idProceso}")]
+        public async Task<ActionResult<IEnumerable<Tareas>>> GetTareasPorProceso(int idProceso)
+        {
+            var tareas = await _service.ObtenerTareasPorProceso(idProceso);
+
+            if (tareas == null || !tareas.Any())
+            {
+                return NotFound(new { message = "No se encontraron tareas para este proceso." });
+            }
+
+            return Ok(tareas);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using GPROMEC.DOMAIN.Core.DTO;
+using GPROMEC.DOMAIN.Core.Entities;
 using GPROMEC.DOMAIN.Core.Interfaces;
 using GPROMEC.DOMAIN.Core.Services;
+using GPROMEC.DOMAIN.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -60,18 +62,17 @@ namespace GPROMEC.API.Controllers
             return NoContent();
         }
 
-        [HttpGet("ProbarFirebase")]
-        public async Task<IActionResult> ProbarFirebase()
+        [HttpGet("PorCliente/{idCliente}")]
+        public async Task<ActionResult<IEnumerable<ProyectoDTO>>> GetProyectosPorCliente(int idCliente)
         {
-            try
+            var proyectos = await _service.ObtenerProyectosPorCliente(idCliente);
+
+            if (proyectos == null || !proyectos.Any())
             {
-                await _service.ProbarConexionFirebase();
-                return Ok("Conexión a Firebase exitosa. Revisa los logs para más detalles.");
+                return NotFound(new { message = "No se encontraron proyectos para este cliente." });
             }
-            catch (Exception ex)
-            {
-                return BadRequest($"Error: {ex.Message}");
-            }
+
+            return Ok(proyectos);
         }
     }
 }

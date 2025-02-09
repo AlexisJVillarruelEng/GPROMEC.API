@@ -15,5 +15,7 @@ namespace GPROMEC.DOMAIN.Core.Interfaces
         Task UpdateAsync(Proyectos proyecto); // Actualizar un proyecto existente.
         Task DeleteLogicallyAsync(int id); // Eliminar lógicamente un proyecto.
         Task DeletePermanentlyAsync(int id); // Eliminar físicamente un proyecto.
+
+        Task<IEnumerable<Proyectos>> ObtenerProyectosPorCliente(int idCliente);
     }
 }

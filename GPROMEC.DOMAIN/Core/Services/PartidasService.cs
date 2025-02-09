@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GPROMEC.DOMAIN.Core.DTO;
 using GPROMEC.DOMAIN.Core.Entities;
 using GPROMEC.DOMAIN.Core.Interfaces;
+using GPROMEC.DOMAIN.Infrastructure.Repositories;
 
 namespace GPROMEC.DOMAIN.Core.Services
 {
@@ -80,6 +81,10 @@ namespace GPROMEC.DOMAIN.Core.Services
         {
             // Llama al repositorio para eliminar permanentemente.
             await _repository.DeleteAsync(id);
+        }
+        public async Task<IEnumerable<Partidas>> ObtenerPartidasPorObra(int idObra)
+        {
+            return await _repository.ObtenerPartidasPorObra(idObra);
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using GPROMEC.DOMAIN.Core.DTO;
+using GPROMEC.DOMAIN.Core.Entities;
 using GPROMEC.DOMAIN.Core.Interfaces;
+using GPROMEC.DOMAIN.Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -55,6 +57,18 @@ namespace GPROMEC.API.Controllers
             // Elimina una partida de forma permanente.
             await _service.DeleteAsync(id);
             return NoContent();
+        }
+        [HttpGet("PorObra/{idObra}")]
+        public async Task<ActionResult<IEnumerable<Partidas>>> GetPartidasPorObra(int idObra)
+        {
+            var partidas = await _service.ObtenerPartidasPorObra(idObra);
+
+            if (partidas == null || !partidas.Any())
+            {
+                return NotFound(new { message = "No se encontraron partidas para esta obra." });
+            }
+
+            return Ok(partidas);
         }
     }
 }
