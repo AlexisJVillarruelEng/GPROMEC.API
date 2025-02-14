@@ -1,9 +1,11 @@
 ﻿using GPROMEC.DOMAIN.Core.DTO;
+using GPROMEC.DOMAIN.Core.Entities;
 
 namespace GPROMEC.DOMAIN.Core.Interfaces
 {
     public interface IArchivosGeneradosService
     {
+        Task<IEnumerable<ArchivoGeneradoDto>> GetAllAsync();
         Task<int> CrearArchivoAsync(ArchivoGeneradoCrearDto archivoDto);
         Task<int> ActualizarArchivoAsync(int id, ArchivoGeneradoCrearDto archivoDto, string generadoPor);
         Task<bool> EliminarLogicamenteAsync(int id);

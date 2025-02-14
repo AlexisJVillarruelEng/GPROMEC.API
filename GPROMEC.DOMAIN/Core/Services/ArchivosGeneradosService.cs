@@ -7,6 +7,7 @@ using Validation;
 using OfficeOpenXml;
 using GPROMEC.DOMAIN.Core.DTO;
 using System.IO.Compression;
+using GPROMEC.DOMAIN.Core.Entities;
 
 namespace GPROMEC.DOMAIN.Core.Services
 {
@@ -17,6 +18,10 @@ namespace GPROMEC.DOMAIN.Core.Services
         public ArchivosGeneradosService(IArchivosGeneradosRepository repository)
         {
             _repository = repository;
+        }
+        public async Task<IEnumerable<ArchivoGeneradoDto>> GetAllAsync()
+        {
+            return await _repository.GetAllAsync();
         }
 
         public async Task<int> CrearArchivoAsync(ArchivoGeneradoCrearDto archivoDto)

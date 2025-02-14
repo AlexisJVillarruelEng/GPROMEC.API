@@ -40,7 +40,8 @@ namespace GPROMEC.DOMAIN.Core.Services
                     FechaInicio = p.FechaInicio,
                     FechaFin = p.FechaFin,
                     Estado = p.Estado,
-                    NombreCliente = p.IdClienteNavigation?.NombreCliente
+                    NombreCliente = p.IdClienteNavigation?.NombreCliente,
+                    Idcliente = (int)p.IdCliente
                 };
             });
         }

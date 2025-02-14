@@ -1,4 +1,5 @@
 ﻿using GPROMEC.DOMAIN.Core.DTO;
+using GPROMEC.DOMAIN.Core.Entities;
 
 namespace GPROMEC.DOMAIN.Core.Interfaces
 {
@@ -11,5 +12,6 @@ namespace GPROMEC.DOMAIN.Core.Interfaces
         Task<List<ArchivoGeneradoDto>> ObtenerArchivosPorProyectoAsync(int idRelacion);
         Task<List<ArchivoGeneradoDto>> ObtenerArchivosPorCarpetaAsync(string carpeta);
         Task<byte[]> ObtenerArchivoBinarioAsync(int id);
+        Task<IEnumerable<ArchivoGeneradoDto>> GetAllAsync();
     }
 }

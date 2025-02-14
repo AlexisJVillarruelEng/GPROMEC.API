@@ -1,5 +1,6 @@
 ﻿
 using GPROMEC.DOMAIN.Core.DTO;
+using GPROMEC.DOMAIN.Core.Entities;
 using GPROMEC.DOMAIN.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,12 @@ namespace GPROMEC.API.Controllers
         public ArchivosGeneradosController(IArchivosGeneradosService service)
         {
             _service = service;
+        }
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ArchivoGeneradoDto>>> GetAll()
+        {
+            var archivos = await _service.GetAllAsync();
+            return Ok(archivos);
         }
 
         [HttpPost]

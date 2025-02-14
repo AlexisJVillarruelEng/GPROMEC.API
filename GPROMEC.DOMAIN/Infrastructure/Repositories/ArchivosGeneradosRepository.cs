@@ -19,7 +19,21 @@ namespace GPROMEC.DOMAIN.Infrastructure.Repositories
         {
             _context = context;
         }
-
+        public async Task<IEnumerable<ArchivoGeneradoDto>> GetAllAsync()
+        {
+            var entities = await _context.ArchivosGenerados.ToListAsync();
+            var dtos = entities.Select(entity => new ArchivoGeneradoDto
+            {
+                IdArchivo = entity.IdArchivo,
+                IdRelacion = (int)entity.IdRelacion,
+                TablaRelacion = entity.TablaRelacion,
+                Carpeta = entity.Carpeta,
+                NombreArchivo = entity.NombreArchivo,
+                GeneradoPor = entity.GeneradoPor,
+                Archivo = entity.UrlArchivo
+            });
+            return dtos;
+        }
         public async Task<int> CrearArchivoAsync(ArchivoGeneradoCrearDto archivoDto)
         {
             var archivo = new ArchivosGenerados

@@ -24,6 +24,7 @@ namespace GPROMEC.DOMAIN.Core.DTO
         public DateOnly? FechaFin { get; set; } // Fecha de finalización del proyecto.
         public bool Estado { get; set; } // Estado del proyecto.
         public string? NombreCliente { get; set; } // Nombre del cliente asociado.
+        public int Idcliente { get; set; }
     }
 
 }
