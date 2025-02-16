@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GPROMEC.DOMAIN.Core.DTO;
 using GPROMEC.DOMAIN.Core.Entities;
 
 namespace GPROMEC.DOMAIN.Core.Interfaces
@@ -14,5 +15,7 @@ namespace GPROMEC.DOMAIN.Core.Interfaces
         Task<int> AddAsync(Clientes cliente); // Insertar un nuevo cliente.
         Task UpdateAsync(Clientes cliente); // Actualizar un cliente existente.
         Task DeleteAsync(int id); // Eliminar físicamente un cliente.
+
+        Task<Clientes> LoginAsync(string nombre, string correo, string telefono);
     }
 }

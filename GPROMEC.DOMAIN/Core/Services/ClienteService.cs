@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GPROMEC.DOMAIN.Core.DTO;
 using GPROMEC.DOMAIN.Core.Entities;
 using GPROMEC.DOMAIN.Core.Interfaces;
+using GPROMEC.DOMAIN.Infrastructure.Repositories;
 
 namespace GPROMEC.DOMAIN.Core.Services
 {
@@ -86,6 +87,11 @@ namespace GPROMEC.DOMAIN.Core.Services
         {
             // Llama al repositorio para eliminar físicamente el cliente.
             await _repository.DeleteAsync(id);
+        }
+        public async Task<Clientes> LoginAsync(string nombre, string correo, string telefono)
+        {
+            // Aquí se puede agregar lógica adicional, como validaciones o logging
+            return await _repository.LoginAsync(nombre, correo, telefono);
         }
     }
 }

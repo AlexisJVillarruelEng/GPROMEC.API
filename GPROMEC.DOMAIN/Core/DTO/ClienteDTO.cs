@@ -22,5 +22,12 @@ namespace GPROMEC.DOMAIN.Core.DTO
         public string? CorreoCliente { get; set; } // Correo electrónico.
         public string? TelefonoCliente { get; set; } // Teléfono.
     }
+    public class LoginClienteDto
+    {
+        public string NombreCliente { get; set; }
+        public string CorreoCliente { get; set; }
+        public string TelefonoCliente { get; set; }
+        // Opcional: Contraseña si la usas en la tabla
+    }
 
 }

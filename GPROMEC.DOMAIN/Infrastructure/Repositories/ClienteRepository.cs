@@ -56,5 +56,13 @@ namespace GPROMEC.DOMAIN.Infrastructure.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<Clientes> LoginAsync(string nombre, string correo, string telefono)
+        {
+            return await _context.Clientes.FirstOrDefaultAsync(c =>
+                c.NombreCliente == nombre &&
+                c.CorreoCliente == correo &&
+                c.TelefonoCliente == telefono);
+        }
     }
 }
