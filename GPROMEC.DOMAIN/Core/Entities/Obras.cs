@@ -17,6 +17,8 @@ public partial class Obras
 
     public DateOnly? FechaFin { get; set; }
 
+    public virtual ICollection<CabeceraAts> CabeceraAts { get; set; } = new List<CabeceraAts>();
+
     public virtual Proyectos IdProyectoNavigation { get; set; } = null!;
 
     public virtual ICollection<Partidas> Partidas { get; set; } = new List<Partidas>();

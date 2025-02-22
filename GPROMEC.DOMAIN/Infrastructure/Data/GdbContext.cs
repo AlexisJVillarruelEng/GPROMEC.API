@@ -18,19 +18,35 @@ public partial class GdbContext : DbContext
 
     public virtual DbSet<ArchivosGenerados> ArchivosGenerados { get; set; }
 
+    public virtual DbSet<CabeceraAts> CabeceraAts { get; set; }
+
+    public virtual DbSet<CabeceraPermisos> CabeceraPermisos { get; set; }
+
     public virtual DbSet<Clientes> Clientes { get; set; }
+
+    public virtual DbSet<DetalleAts> DetalleAts { get; set; }
 
     public virtual DbSet<DetalleIperc> DetalleIperc { get; set; }
 
+    public virtual DbSet<DetallePermisosGeneral> DetallePermisosGeneral { get; set; }
+
+    public virtual DbSet<FirmasAtsProcesos> FirmasAtsProcesos { get; set; }
+
     public virtual DbSet<FirmasMatrizIper> FirmasMatrizIper { get; set; }
+
+    public virtual DbSet<FormPermisos> FormPermisos { get; set; }
 
     public virtual DbSet<Obras> Obras { get; set; }
 
     public virtual DbSet<Partidas> Partidas { get; set; }
 
+    public virtual DbSet<Permisos> Permisos { get; set; }
+
     public virtual DbSet<Procesos> Procesos { get; set; }
 
     public virtual DbSet<Proyectos> Proyectos { get; set; }
+
+    public virtual DbSet<RespuestaPermisos> RespuestaPermisos { get; set; }
 
     public virtual DbSet<Roles> Roles { get; set; }
 
@@ -81,6 +97,88 @@ public partial class GdbContext : DbContext
                 .HasConstraintName("FK_Archivos_Generados_Proyectos");
         });
 
+        modelBuilder.Entity<CabeceraAts>(entity =>
+        {
+            entity.HasKey(e => e.IdCabeceraats);
+
+            entity.ToTable("cabeceraATS");
+
+            entity.Property(e => e.IdCabeceraats).HasColumnName("id_cabeceraats");
+            entity.Property(e => e.Andamios).HasColumnName("andamios");
+            entity.Property(e => e.ComprometeCondicion).HasColumnName("compromete_condicion");
+            entity.Property(e => e.CondicionEquipo).HasColumnName("condicion_equipo");
+            entity.Property(e => e.CordinacionActividades).HasColumnName("cordinacion_actividades");
+            entity.Property(e => e.EpAdecuados).HasColumnName("Ep_adecuados");
+            entity.Property(e => e.EsRutinaria).HasColumnName("es_rutinaria");
+            entity.Property(e => e.EvaluoCondiciones).HasColumnName("evaluo_condiciones");
+            entity.Property(e => e.Fecha).HasColumnName("fecha");
+            entity.Property(e => e.IdObra).HasColumnName("id_obra");
+            entity.Property(e => e.IdPartida).HasColumnName("id_partida");
+            entity.Property(e => e.IdPermiso).HasColumnName("id_permiso");
+            entity.Property(e => e.IdTarea).HasColumnName("id_tarea");
+            entity.Property(e => e.PersonalCapacitado).HasColumnName("personal_capacitado");
+            entity.Property(e => e.Pilar1).HasColumnName("pilar1");
+            entity.Property(e => e.Pilar2).HasColumnName("pilar2");
+            entity.Property(e => e.Pilar3).HasColumnName("pilar3");
+            entity.Property(e => e.Pilar4).HasColumnName("pilar4");
+            entity.Property(e => e.Pilar5).HasColumnName("pilar5");
+            entity.Property(e => e.RiesgoIdentify).HasColumnName("riesgo_identify");
+            entity.Property(e => e.RiesgoIncendio).HasColumnName("riesgo_incendio");
+            entity.Property(e => e.Sector)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("sector");
+            entity.Property(e => e.TrabajoAltura).HasColumnName("trabajo_altura");
+            entity.Property(e => e.TrabajoCaliente).HasColumnName("trabajo_caliente");
+
+            entity.HasOne(d => d.IdObraNavigation).WithMany(p => p.CabeceraAts)
+                .HasForeignKey(d => d.IdObra)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_cabeceraATS_Obras");
+
+            entity.HasOne(d => d.IdPartidaNavigation).WithMany(p => p.CabeceraAts)
+                .HasForeignKey(d => d.IdPartida)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_cabeceraATS_Partidas");
+
+            entity.HasOne(d => d.IdPermisoNavigation).WithMany(p => p.CabeceraAts)
+                .HasForeignKey(d => d.IdPermiso)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_cabeceraATS_permisos");
+
+            entity.HasOne(d => d.IdTareaNavigation).WithMany(p => p.CabeceraAts)
+                .HasForeignKey(d => d.IdTarea)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_cabeceraATS_Tareas");
+        });
+
+        modelBuilder.Entity<CabeceraPermisos>(entity =>
+        {
+            entity.HasKey(e => e.IdCabeceraPermisos);
+
+            entity.ToTable("cabecera_permisos");
+
+            entity.Property(e => e.IdCabeceraPermisos).HasColumnName("id_cabecera_permisos");
+            entity.Property(e => e.Fecha).HasColumnName("fecha");
+            entity.Property(e => e.HoraFin).HasColumnName("hora_fin");
+            entity.Property(e => e.HoraInicio).HasColumnName("hora_inicio");
+            entity.Property(e => e.IdCabeceraAts).HasColumnName("id_cabecera_ats");
+            entity.Property(e => e.IdObra).HasColumnName("id_obra");
+            entity.Property(e => e.IdPartida).HasColumnName("id_partida");
+            entity.Property(e => e.IdTarea).HasColumnName("id_tarea");
+            entity.Property(e => e.ObservacionConsideracion)
+                .HasMaxLength(150)
+                .HasColumnName("observacion_consideracion");
+            entity.Property(e => e.Titulo)
+                .HasMaxLength(100)
+                .HasColumnName("titulo");
+
+            entity.HasOne(d => d.IdCabeceraAtsNavigation).WithMany(p => p.CabeceraPermisos)
+                .HasForeignKey(d => d.IdCabeceraAts)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_cabecera_permisos_cabeceraATS");
+        });
+
         modelBuilder.Entity<Clientes>(entity =>
         {
             entity.HasKey(e => e.IdCliente);
@@ -98,6 +196,40 @@ public partial class GdbContext : DbContext
             entity.Property(e => e.TelefonoCliente)
                 .HasMaxLength(20)
                 .HasColumnName("telefono_cliente");
+        });
+
+        modelBuilder.Entity<DetalleAts>(entity =>
+        {
+            entity.HasKey(e => e.IdDetalleAts);
+
+            entity.ToTable("detalleATS");
+
+            entity.Property(e => e.IdDetalleAts).HasColumnName("id_detalle_ats");
+            entity.Property(e => e.EtapasTrabajo)
+                .HasMaxLength(100)
+                .HasColumnName("etapas_trabajo");
+            entity.Property(e => e.FirmaPersonal).HasColumnName("firma_personal");
+            entity.Property(e => e.IdCabeceraats).HasColumnName("id_cabeceraats");
+            entity.Property(e => e.MedidaRiesgo)
+                .HasMaxLength(100)
+                .HasColumnName("medida_riesgo");
+            entity.Property(e => e.Peligros)
+                .HasMaxLength(100)
+                .HasColumnName("peligros");
+            entity.Property(e => e.Personal).HasColumnName("personal");
+            entity.Property(e => e.RiesgoAmbiental)
+                .HasMaxLength(100)
+                .HasColumnName("riesgo_ambiental");
+
+            entity.HasOne(d => d.IdCabeceraatsNavigation).WithMany(p => p.DetalleAts)
+                .HasForeignKey(d => d.IdCabeceraats)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_detalleATS_cabeceraATS");
+
+            entity.HasOne(d => d.PersonalNavigation).WithMany(p => p.DetalleAts)
+                .HasForeignKey(d => d.Personal)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_detalleATS_Trabajadores");
         });
 
         modelBuilder.Entity<DetalleIperc>(entity =>
@@ -139,6 +271,70 @@ public partial class GdbContext : DbContext
                 .HasForeignKey(d => d.IdTarea)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_DetalleIPERC_Tareas");
+        });
+
+        modelBuilder.Entity<DetallePermisosGeneral>(entity =>
+        {
+            entity.HasKey(e => e.IdDetallePermiso);
+
+            entity.ToTable("detalle_permisos_general");
+
+            entity.Property(e => e.IdDetallePermiso).HasColumnName("id_detalle_permiso");
+            entity.Property(e => e.FirmaTrabajador).HasColumnName("firma_trabajador");
+            entity.Property(e => e.IdCabeceraPermisos).HasColumnName("id_cabecera_permisos");
+            entity.Property(e => e.Trabajador).HasColumnName("trabajador");
+
+            entity.HasOne(d => d.IdCabeceraPermisosNavigation).WithMany(p => p.DetallePermisosGeneral)
+                .HasForeignKey(d => d.IdCabeceraPermisos)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_detalle_permisos_general_cabecera_permisos");
+
+            entity.HasOne(d => d.TrabajadorNavigation).WithMany(p => p.DetallePermisosGeneral)
+                .HasForeignKey(d => d.Trabajador)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_detalle_permisos_general_Trabajadores");
+        });
+
+        modelBuilder.Entity<FirmasAtsProcesos>(entity =>
+        {
+            entity.HasKey(e => e.IdFirmas);
+
+            entity.ToTable("Firmas_ats_procesos");
+
+            entity.Property(e => e.IdFirmas).HasColumnName("id_firmas");
+            entity.Property(e => e.Aprobado).HasColumnName("aprobado");
+            entity.Property(e => e.Elaborado).HasColumnName("elaborado");
+            entity.Property(e => e.FirmaAprobado).HasColumnName("firma_aprobado");
+            entity.Property(e => e.FirmaElaborado).HasColumnName("firma_elaborado");
+            entity.Property(e => e.FirmaRevisado).HasColumnName("firma_revisado");
+            entity.Property(e => e.IdCabeceraAts).HasColumnName("id_cabecera_ats");
+            entity.Property(e => e.IdCabeceraPermisos).HasColumnName("id_cabecera_permisos");
+            entity.Property(e => e.Revisado).HasColumnName("revisado");
+
+            entity.HasOne(d => d.AprobadoNavigation).WithMany(p => p.FirmasAtsProcesosAprobadoNavigation)
+                .HasForeignKey(d => d.Aprobado)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Firmas_ats_procesos_Trabajadores1");
+
+            entity.HasOne(d => d.ElaboradoNavigation).WithMany(p => p.FirmasAtsProcesosElaboradoNavigation)
+                .HasForeignKey(d => d.Elaborado)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Firmas_ats_procesos_Trabajadores");
+
+            entity.HasOne(d => d.IdCabeceraAtsNavigation).WithMany(p => p.FirmasAtsProcesos)
+                .HasForeignKey(d => d.IdCabeceraAts)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Firmas_ats_procesos_cabeceraATS");
+
+            entity.HasOne(d => d.IdCabeceraPermisosNavigation).WithMany(p => p.FirmasAtsProcesos)
+                .HasForeignKey(d => d.IdCabeceraPermisos)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Firmas_ats_procesos_cabecera_permisos");
+
+            entity.HasOne(d => d.RevisadoNavigation).WithMany(p => p.FirmasAtsProcesosRevisadoNavigation)
+                .HasForeignKey(d => d.Revisado)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Firmas_ats_procesos_Trabajadores2");
         });
 
         modelBuilder.Entity<FirmasMatrizIper>(entity =>
@@ -184,6 +380,21 @@ public partial class GdbContext : DbContext
                 .HasConstraintName("FK_Firmas_matriz_iper_Trabajadores1");
         });
 
+        modelBuilder.Entity<FormPermisos>(entity =>
+        {
+            entity.HasKey(e => e.IdForm);
+
+            entity.ToTable("form_permisos");
+
+            entity.Property(e => e.IdForm).HasColumnName("id_form");
+            entity.Property(e => e.DescripPreguntas)
+                .HasMaxLength(200)
+                .HasColumnName("descrip_preguntas");
+            entity.Property(e => e.TituloPermiso)
+                .HasMaxLength(150)
+                .HasColumnName("titulo_permiso");
+        });
+
         modelBuilder.Entity<Obras>(entity =>
         {
             entity.HasKey(e => e.IdObra);
@@ -219,6 +430,18 @@ public partial class GdbContext : DbContext
                 .HasForeignKey(d => d.IdObra)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Partidas_Obras");
+        });
+
+        modelBuilder.Entity<Permisos>(entity =>
+        {
+            entity.HasKey(e => e.IdPermiso);
+
+            entity.ToTable("permisos");
+
+            entity.Property(e => e.IdPermiso).HasColumnName("id_permiso");
+            entity.Property(e => e.TituloPermiso)
+                .HasMaxLength(50)
+                .HasColumnName("titulo_permiso");
         });
 
         modelBuilder.Entity<Procesos>(entity =>
@@ -257,6 +480,28 @@ public partial class GdbContext : DbContext
             entity.HasOne(d => d.IdClienteNavigation).WithMany(p => p.Proyectos)
                 .HasForeignKey(d => d.IdCliente)
                 .HasConstraintName("FK_Proyectos_Clientes");
+        });
+
+        modelBuilder.Entity<RespuestaPermisos>(entity =>
+        {
+            entity.HasKey(e => e.IdRespuesta);
+
+            entity.ToTable("respuesta_permisos");
+
+            entity.Property(e => e.IdRespuesta).HasColumnName("id_respuesta");
+            entity.Property(e => e.IdCabeceraPermisos).HasColumnName("id_cabecera_permisos");
+            entity.Property(e => e.IdForm).HasColumnName("id_form");
+            entity.Property(e => e.Respuesta).HasColumnName("respuesta");
+
+            entity.HasOne(d => d.IdCabeceraPermisosNavigation).WithMany(p => p.RespuestaPermisos)
+                .HasForeignKey(d => d.IdCabeceraPermisos)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_respuesta_permisos_cabecera_permisos");
+
+            entity.HasOne(d => d.IdFormNavigation).WithMany(p => p.RespuestaPermisos)
+                .HasForeignKey(d => d.IdForm)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_respuesta_permisos_form_permisos");
         });
 
         modelBuilder.Entity<Roles>(entity =>

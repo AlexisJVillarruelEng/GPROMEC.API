@@ -25,6 +25,16 @@ public partial class Trabajadores
 
     public bool Estado { get; set; }
 
+    public virtual ICollection<DetalleAts> DetalleAts { get; set; } = new List<DetalleAts>();
+
+    public virtual ICollection<DetallePermisosGeneral> DetallePermisosGeneral { get; set; } = new List<DetallePermisosGeneral>();
+
+    public virtual ICollection<FirmasAtsProcesos> FirmasAtsProcesosAprobadoNavigation { get; set; } = new List<FirmasAtsProcesos>();
+
+    public virtual ICollection<FirmasAtsProcesos> FirmasAtsProcesosElaboradoNavigation { get; set; } = new List<FirmasAtsProcesos>();
+
+    public virtual ICollection<FirmasAtsProcesos> FirmasAtsProcesosRevisadoNavigation { get; set; } = new List<FirmasAtsProcesos>();
+
     public virtual ICollection<FirmasMatrizIper> FirmasMatrizIperAprobadoPorNavigation { get; set; } = new List<FirmasMatrizIper>();
 
     public virtual ICollection<FirmasMatrizIper> FirmasMatrizIperElaboradoPorNavigation { get; set; } = new List<FirmasMatrizIper>();

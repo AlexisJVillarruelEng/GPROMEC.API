@@ -58,6 +58,40 @@ builder.Services.AddScoped<IArchivosGeneradosService, ArchivosGeneradosService>(
 builder.Services.AddScoped<IMatrizIpercRepository, MatrizIpercRepository > ();
 builder.Services.AddScoped<IMatrizIpercService, MatrizIpercService > ();
 
+builder.Services.AddScoped<ICabeceraATSRepository, CabeceraATSRepository> ();
+builder.Services.AddScoped<ICabeceraATSService, CabeceraATSService> ();
+
+builder.Services.AddScoped<ICabeceraPermisosRepository, CabeceraPermisosRepository> ();
+builder.Services.AddScoped<ICabeceraPermisosService, CabeceraPermisosService> ();
+
+builder.Services.AddScoped<IDetalleATSRepository, DetalleATSRepository> ();
+builder.Services.AddScoped<IDetalleATSService, DetalleATSService> ();
+
+builder.Services.AddScoped<IDetallePermisosGeneralRepository,DetallePermisosGeneralRepository> ();
+builder.Services.AddScoped<IDetallePermisosGeneralService,DetallePermisoGeneralService> ();
+
+builder.Services.AddScoped<IFirmasAtsProcesosRepository,FirmasAtsProcesosRepository> ();
+builder.Services.AddScoped<IFirmasAtsProcesosService,FirmasAtsProcesosService> ();
+
+
+builder.Services.AddScoped<IPermisoRepository,PermisoRepository> ();
+builder.Services.AddScoped<IPermisoService,PermisoService> ();
+
+builder.Services.AddScoped<IRespuestaPermisosRepository,RespuestaPermisosRepository>();
+builder.Services.AddScoped<IRespuestaPermisosService,RespuestaPermisosService>();
+
+builder.Services.AddScoped<IFormPermisoRepository,FormPermisoRepository>();
+builder.Services.AddScoped<IFormPermisoService,FormPermisoService>();
+
+
+
+
+
+
+
+
+
+
 //builder.Services.AddSharedInfrastructure(_config);
 builder.Services.AddControllers();
 
