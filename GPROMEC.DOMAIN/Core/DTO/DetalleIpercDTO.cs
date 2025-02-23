@@ -38,6 +38,8 @@ namespace GPROMEC.DOMAIN.Core.DTO
         public int Severidad { get; set; }
         public int NivelDeRiesgo { get; set; } // Calculado en el servicio
         public string? GradoDeRiesgo { get; set; } // Calculado en el servicio
+
+        
     }
 
 

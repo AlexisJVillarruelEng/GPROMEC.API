@@ -6,17 +6,24 @@ using System.Threading.Tasks;
 
 namespace GPROMEC.DOMAIN.Core.DTO
 {
-    public class DetalleATSDto
+    public class DetalleAtsDto : DetalleAtsCreateUpdateDto
     {
-        // En POST no se envía el Id ya que es autogenerado.
-        public int? IdDetalleATS { get; set; }
-        public int IdCabeceraATS { get; set; }
+        // Este campo se asigna al leer de la BD.
+        public int IdDetalleAts { get; set; }
+
+        // Información completa de DetalleIperc (DetallePeligros)
+        public DetalleIpercDTO? DetallePeligros { get; set; }
+    } 
+    
+
+    public class DetalleAtsCreateUpdateDto
+    {
+        // No se incluye IdDetalleAts ya que es Identity.
+        public int IdCabeceraAts { get; set; }
         public string? EtapasTrabajo { get; set; }
-        public string? Peligros { get; set; }
-        public string? RiesgoAmbiental { get; set; }
-        public string? MedidaRiesgo { get; set; }
+        public int IdDetalleIperc { get; set; }
         public int Personal { get; set; }
-        // Para firmas, el API hará la conversión; en el DTO se trabaja con base64
+        // Se recibe la firma en Base64 y se convertirá a byte[] en el Service.
         public string? FirmaPersonalBase64 { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using GPROMEC.DOMAIN.Core.DTO;
 using GPROMEC.DOMAIN.Core.Interfaces;
+using GPROMEC.DOMAIN.Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,41 +8,48 @@ namespace GPROMEC.API.Controllers
 {
     [Route("gpromecAPIv1/[controller]")]
     [ApiController]
-    public class DetalleATSController : ControllerBase
+    public class DetalleAtsController : ControllerBase
     {
         private readonly IDetalleATSService _service;
-        public DetalleATSController(IDetalleATSService service)
+
+        public DetalleAtsController(IDetalleATSService service)
         {
             _service = service;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll() =>
-            Ok(await _service.GetAllAsync());
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] DetalleAtsCreateUpdateDto dto)
+        {
+            if (dto == null)
+                return BadRequest();
+
+            var result = await _service.AddAsync(dto);
+            return CreatedAtAction(nameof(GetById), new { id = result.IdDetalleAts }, result);
+        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var dto = await _service.GetByIdAsync(id);
-            if (dto == null)
+            var result = await _service.GetByIdAsync(id);
+            if (result == null)
                 return NotFound();
-            return Ok(dto);
+
+            return Ok(result);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] DetalleATSDto dto)
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
         {
-            if (dto == null)
-                return BadRequest();
-            var created = await _service.AddAsync(dto);
-            return CreatedAtAction(nameof(GetById), new { id = created.IdDetalleATS }, created);
+            var results = await _service.GetAllAsync();
+            return Ok(results);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] DetalleATSDto dto)
+        public async Task<IActionResult> Put(int id, [FromBody] DetalleAtsCreateUpdateDto dto)
         {
             if (dto == null)
                 return BadRequest();
+
             await _service.UpdateAsync(id, dto);
             return NoContent();
         }

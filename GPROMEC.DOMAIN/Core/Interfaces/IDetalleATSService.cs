@@ -9,10 +9,10 @@ namespace GPROMEC.DOMAIN.Core.Interfaces
 {
     public interface IDetalleATSService
     {
-        Task<IEnumerable<DetalleATSDto>> GetAllAsync();
-        Task<DetalleATSDto?> GetByIdAsync(int id);
-        Task<DetalleATSDto> AddAsync(DetalleATSDto dto);
-        Task UpdateAsync(int id, DetalleATSDto dto);
+        Task<IEnumerable<DetalleAtsDto>> GetAllAsync();
+        Task<DetalleAtsDto?> GetByIdAsync(int id);
+        Task<DetalleAtsDto> AddAsync(DetalleAtsCreateUpdateDto dto);
+        Task UpdateAsync(int id, DetalleAtsCreateUpdateDto dto);
         Task DeleteAsync(int id);
     }
 }

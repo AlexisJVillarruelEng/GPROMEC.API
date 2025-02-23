@@ -210,21 +210,18 @@ public partial class GdbContext : DbContext
                 .HasColumnName("etapas_trabajo");
             entity.Property(e => e.FirmaPersonal).HasColumnName("firma_personal");
             entity.Property(e => e.IdCabeceraats).HasColumnName("id_cabeceraats");
-            entity.Property(e => e.MedidaRiesgo)
-                .HasMaxLength(100)
-                .HasColumnName("medida_riesgo");
-            entity.Property(e => e.Peligros)
-                .HasMaxLength(100)
-                .HasColumnName("peligros");
+            entity.Property(e => e.IdDetalleiperc).HasColumnName("id_detalleiperc");
             entity.Property(e => e.Personal).HasColumnName("personal");
-            entity.Property(e => e.RiesgoAmbiental)
-                .HasMaxLength(100)
-                .HasColumnName("riesgo_ambiental");
 
             entity.HasOne(d => d.IdCabeceraatsNavigation).WithMany(p => p.DetalleAts)
                 .HasForeignKey(d => d.IdCabeceraats)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_detalleATS_cabeceraATS");
+
+            entity.HasOne(d => d.IdDetalleipercNavigation).WithMany(p => p.DetalleAts)
+                .HasForeignKey(d => d.IdDetalleiperc)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_detalleATS_DetalleIPERC");
 
             entity.HasOne(d => d.PersonalNavigation).WithMany(p => p.DetalleAts)
                 .HasForeignKey(d => d.Personal)

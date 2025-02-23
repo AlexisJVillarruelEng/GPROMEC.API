@@ -64,8 +64,8 @@ builder.Services.AddScoped<ICabeceraATSService, CabeceraATSService> ();
 builder.Services.AddScoped<ICabeceraPermisosRepository, CabeceraPermisosRepository> ();
 builder.Services.AddScoped<ICabeceraPermisosService, CabeceraPermisosService> ();
 
-builder.Services.AddScoped<IDetalleATSRepository, DetalleATSRepository> ();
-builder.Services.AddScoped<IDetalleATSService, DetalleATSService> ();
+builder.Services.AddScoped<IDetalleATSRepository, DetalleAtsRepository> ();
+builder.Services.AddScoped<IDetalleATSService, DetalleAtsService> ();
 
 builder.Services.AddScoped<IDetallePermisosGeneralRepository,DetallePermisosGeneralRepository> ();
 builder.Services.AddScoped<IDetallePermisosGeneralService,DetallePermisoGeneralService> ();

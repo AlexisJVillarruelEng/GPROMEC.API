@@ -9,71 +9,98 @@ using GPROMEC.DOMAIN.Core.Interfaces;
 
 namespace GPROMEC.DOMAIN.Core.Services
 {
-    public class DetalleATSService : IDetalleATSService
+    public class DetalleAtsService : IDetalleATSService
     {
-        private readonly IDetalleATSRepository _repository;
-        public DetalleATSService(IDetalleATSRepository repository)
+        private readonly IDetalleATSRepository _repo;
+
+        public DetalleAtsService(IDetalleATSRepository repo)
         {
-            _repository = repository;
+            _repo = repo;
         }
 
-        public async Task<IEnumerable<DetalleATSDto>> GetAllAsync()
+        public async Task<DetalleAtsDto> AddAsync(DetalleAtsCreateUpdateDto dto)
         {
-            var entities = await _repository.GetAllAsync();
-            return entities.Select(e => MapToDto(e));
+            var entity = new DetalleAts
+            {
+                // No se asigna IdDetalleAts, se genera automáticamente.
+                IdCabeceraats = dto.IdCabeceraAts,
+                EtapasTrabajo = dto.EtapasTrabajo,
+                IdDetalleiperc = dto.IdDetalleIperc,
+                Personal = dto.Personal,
+                FirmaPersonal = dto.FirmaPersonalBase64 != null
+                                ? Convert.FromBase64String(dto.FirmaPersonalBase64)
+                                : null
+            };
+
+            var created = await _repo.AddAsync(entity);
+            return MapToDto(created);
         }
 
-        public async Task<DetalleATSDto?> GetByIdAsync(int id)
+        public async Task<IEnumerable<DetalleAtsDto>> GetAllAsync()
         {
-            var entity = await _repository.GetByIdAsync(id);
+            var data = await _repo.GetAllAsync();
+            return data.Select(x => MapToDto(x));
+        }
+
+        public async Task<DetalleAtsDto?> GetByIdAsync(int id)
+        {
+            var entity = await _repo.GetByIdAsync(id);
             return entity == null ? null : MapToDto(entity);
         }
 
-        public async Task<DetalleATSDto> AddAsync(DetalleATSDto dto)
+        public async Task UpdateAsync(int id, DetalleAtsCreateUpdateDto dto)
         {
-            var entity = MapToEntity(dto);
-            var added = await _repository.AddAsync(entity);
-            return MapToDto(added);
-        }
+            var entity = new DetalleAts
+            {
+                IdDetalleAts = id,
+                IdCabeceraats = dto.IdCabeceraAts,
+                EtapasTrabajo = dto.EtapasTrabajo,
+                IdDetalleiperc = dto.IdDetalleIperc,
+                Personal = dto.Personal,
+                FirmaPersonal = dto.FirmaPersonalBase64 != null
+                                ? Convert.FromBase64String(dto.FirmaPersonalBase64)
+                                : null
+            };
 
-        public async Task UpdateAsync(int id, DetalleATSDto dto)
-        {
-            var entity = MapToEntity(dto);
-            await _repository.UpdateAsync(id, entity);
+            await _repo.UpdateAsync(id, entity);
         }
 
         public async Task DeleteAsync(int id)
         {
-            await _repository.DeleteAsync(id);
+            await _repo.DeleteAsync(id);
         }
 
-        // Mapeos manuales (puedes usar AutoMapper en producción)
-        private static DetalleATSDto MapToDto(DetalleAts entity) =>
-            new DetalleATSDto
+        private DetalleAtsDto MapToDto(DetalleAts entity)
+        {
+            return new DetalleAtsDto
             {
-                IdDetalleATS = entity.IdDetalleAts,
-                IdCabeceraATS = entity.IdCabeceraats,
+                IdDetalleAts = entity.IdDetalleAts,
+                IdCabeceraAts = entity.IdCabeceraats,
                 EtapasTrabajo = entity.EtapasTrabajo,
-                Peligros = entity.Peligros,
-                RiesgoAmbiental = entity.RiesgoAmbiental,
-                MedidaRiesgo = entity.MedidaRiesgo,
+                IdDetalleIperc = entity.IdDetalleiperc,
                 Personal = entity.Personal,
-                // Convertir byte[] a base64 (si existe)
-                FirmaPersonalBase64 = entity.FirmaPersonal != null ? Convert.ToBase64String(entity.FirmaPersonal) : null
+                FirmaPersonalBase64 = entity.FirmaPersonal != null ? Convert.ToBase64String(entity.FirmaPersonal) : null,
+                DetallePeligros = entity.IdDetalleipercNavigation != null
+                    ? new DetalleIpercDTO
+                    {
+                        IdDetalle = entity.IdDetalleipercNavigation.IdDetalle,
+                        IdTarea = entity.IdDetalleipercNavigation.IdTarea,
+                        DescPeligros = entity.IdDetalleipercNavigation.DescPeligros,
+                        TipoPeligro = entity.IdDetalleipercNavigation.TipoPeligro,
+                        Riesgos = entity.IdDetalleipercNavigation.Riesgos,
+                        TipoRiesgo = entity.IdDetalleipercNavigation.TipoRiesgo,
+                        MedidaControlDescrip = entity.IdDetalleipercNavigation.MedidaControlDescrip,
+                        PersonasExpuestas = entity.IdDetalleipercNavigation.PersonasExpuestas ?? 0,
+                        ProcedimientosExistentes = entity.IdDetalleipercNavigation.ProcedimietntosExistentes ?? 0,
+                        Capacitacion = entity.IdDetalleipercNavigation.Capacitacion ?? 0,
+                        ExpoRiesgo = entity.IdDetalleipercNavigation.ExpoRiesgo ?? 0,
+                        Probabilidad = entity.IdDetalleipercNavigation.Probabilidad ?? 0,
+                        Severidad = entity.IdDetalleipercNavigation.Severidad ?? 0,
+                        NivelDeRiesgo = entity.IdDetalleipercNavigation.NivielDeRiesgo ?? 0,
+                        GradoDeRiesgo = entity.IdDetalleipercNavigation.GradoRiesgo
+                    }
+                    : null
             };
-
-        private static DetalleAts MapToEntity(DetalleATSDto dto) =>
-            new DetalleAts
-            {
-                // No asignar Id en POST, ya que es Identity.
-                IdCabeceraats = dto.IdCabeceraATS,
-                EtapasTrabajo = dto.EtapasTrabajo,
-                Peligros = dto.Peligros,
-                RiesgoAmbiental = dto.RiesgoAmbiental,
-                MedidaRiesgo = dto.MedidaRiesgo,
-                Personal = dto.Personal,
-                // Convertir base64 a byte[] si se proporcionó
-                FirmaPersonal = !string.IsNullOrEmpty(dto.FirmaPersonalBase64) ? Convert.FromBase64String(dto.FirmaPersonalBase64) : null
-            };
+        }
     }
 }

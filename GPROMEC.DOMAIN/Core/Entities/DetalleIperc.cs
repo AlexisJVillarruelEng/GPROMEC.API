@@ -35,5 +35,7 @@ public partial class DetalleIperc
 
     public string? GradoRiesgo { get; set; }
 
+    public virtual ICollection<DetalleAts> DetalleAts { get; set; } = new List<DetalleAts>();
+
     public virtual Tareas IdTareaNavigation { get; set; } = null!;
 }
