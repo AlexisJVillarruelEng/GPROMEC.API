@@ -120,11 +120,25 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "GP API v1");
+        c.RoutePrefix = string.Empty; // 🔥 Esto hace que Swagger se cargue en "/"
+    });
 }
 
 app.UseAuthorization();
 app.UseCors();
 app.MapControllers();
+
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path.StartsWithSegments("/swagger"))
+    {
+        context.Response.Redirect("/");
+        return;
+    }
+    await next();
+});
 
 app.Run();
