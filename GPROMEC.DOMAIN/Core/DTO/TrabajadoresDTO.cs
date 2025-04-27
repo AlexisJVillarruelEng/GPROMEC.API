@@ -41,6 +41,7 @@ namespace GPROMEC.DOMAIN.Core.DTO
     }
     public class LoginResponseDTO
     {
+        public int IdTrabajador { get; set; } // ID del trabajador.
         public string? Nombre { get; set; } // Nombre del trabajador.
         public string? Rol { get; set; } // Rol del trabajador.
     }

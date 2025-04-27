@@ -85,7 +85,8 @@ namespace GPROMEC.DOMAIN.Core.Services
             {
                 return new LoginResponseDTO
                 {
-                     Nombre = trabajador.Nombre,
+                    IdTrabajador = trabajador.IdTrabajador,
+                    Nombre = trabajador.Nombre,
                      Rol = trabajador.IdRolNavigation.NombreRol // Asume que IdRolNavigation contiene el rol
                 }; // Retorna el nombre si las credenciales son correctas.
             }

@@ -75,7 +75,8 @@ namespace GPROMEC.API.Controllers
             return Ok(new
             {
                 Nombre = nombre.Nombre,
-                Rol = nombre.Rol
+                Rol = nombre.Rol,
+                Id= nombre.IdTrabajador
             }); // Retorna 200 con el nombre del trabajador.
         }
 
