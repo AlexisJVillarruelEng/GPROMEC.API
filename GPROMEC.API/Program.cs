@@ -82,7 +82,7 @@ var app = builder.Build();
 // Middleware
 app.UseCors();
 app.UseAuthorization();
-app.MapControllers();
+
 
 // 🔥 Ahora Swagger estará disponible SIEMPRE
 app.UseSwagger();
@@ -102,5 +102,5 @@ app.Use(async (context, next) =>
     }
     await next();
 });
-
+app.MapControllers();
 app.Run();
